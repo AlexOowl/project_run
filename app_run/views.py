@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -8,6 +9,6 @@ def company_details_view(request):
         'company_name': 'Клуб дедов-бегунов',
         'slogan': 'Бегаем в любую погоду!',
         'contacts': 'Мы везде!'
-        })
+        }, status=status.HTTP_200_OK)
 
 
