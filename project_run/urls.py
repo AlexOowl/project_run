@@ -24,12 +24,14 @@ from rest_framework.routers import DefaultRouter
 from app_run.views import RunViewSet, UserViewSet
 
 router = DefaultRouter()
-router.register('api/runs', RunViewSet)
-router.register('api/users/', UserViewSet)
+router.register('api/runs/', RunViewSet)
+router_runs = DefaultRouter()
+router_runs.register('api/users/', UserViewSet)
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/company_details/', company_details),
-    path('', include(router.urls)),
+    path('api/runs/', include(router.urls)),
+    path('api/users/', include(router_runs.urls)),
 ]
