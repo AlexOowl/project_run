@@ -21,13 +21,15 @@ from django.conf import settings
 
 from app_run.views import company_details
 from rest_framework.routers import DefaultRouter
-from app_run.views import RunViewSet
+from app_run.views import RunViewSet, UserViewSet
 
 router = DefaultRouter()
 router.register('api/runs', RunViewSet)
+router.register('api/users/', UserViewSet)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/company_details/', company_details),
-    path('', include(router.urls))
+    path('', include(router.urls)),
 ]
