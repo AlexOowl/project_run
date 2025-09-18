@@ -28,7 +28,7 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         qs = self.queryset
-        user = self.request.query_params.get(UserSerializer.type, None)
+        user = self.request.query_params.get('type', 'all')
         if user:
             qs = qs.filter(type=user)
         return qs
