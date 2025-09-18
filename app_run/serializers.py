@@ -20,7 +20,7 @@ class UserSerializer(serializers.ModelSerializer):
                 type = 'coach'
             elif not obj.is_staff:
                 type = 'athlete'
-            elif obj.is_staff == None or obj.superuser:
+            else:
                 type = 'all'
             return type
 
