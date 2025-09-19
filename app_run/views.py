@@ -34,6 +34,8 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
             qs = qs.filter(is_staff=True)
         elif user_type == 'athlete':
             qs = qs.filter(is_staff=False)
+        else:
+            return qs
         return qs
 
 
