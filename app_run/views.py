@@ -29,11 +29,11 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         qs = User.objects.filter(is_superuser=False)
-        user_type = self.request.query_params.get('type')
+        user_type = self.request.query_params.get('type', None)
         if user_type == 'coach':
-            qs = qs.filter(is_staff=True)
+            qs = qs.filter(is_staff=True, is_superuser=False)
         elif user_type == 'athlete':
-            qs = qs.filter(is_staff=False)
+            qs = qs.filter(is_staff=False, is_superuser=False)
         else:
             qs = qs.filter(is_superuser=False)
         return qs
