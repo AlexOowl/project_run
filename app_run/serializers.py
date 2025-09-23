@@ -1,12 +1,5 @@
 from rest_framework import serializers
-from .models import Run
-from .models import User
-
-
-class RunSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Run
-        fields = '__all__'
+from .models import Run, User
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -15,7 +8,16 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'date_joined', 'username' , 'last_name', 'first_name', 'type']
     def get_type(self, obj):
-        return "coach" if obj.is_staff else "athlete"
+        return 'coach' if obj.is_staff else 'athlete'
+
+
+
+class RunSerializer(serializers.ModelSerializer):
+    athlete = UserSerializer()
+    class Meta:
+        model = Run
+        fields = '__all__'
+        # fields = ['id', 'username', 'last_name', 'first_name']
 
 
 
