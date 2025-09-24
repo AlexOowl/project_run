@@ -20,7 +20,7 @@ class RunSerializer(serializers.ModelSerializer):
     class Meta:
         model = Run
         # fields = '__all__'
-        fields = ['id', 'athlete_data']
+        fields = ['athlete_data']
 
 
 
