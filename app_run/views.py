@@ -18,13 +18,11 @@ def company_details(request):
 
 
 class RunViewSet(viewsets.ModelViewSet):
-    queryset = Run.objects.select_related('athlete')
+    queryset = Run.objects.all()
     serializer_class = RunSerializer
 
-    # def get_queryset(self):
-    #     qs = Run.objects.all()
-    #     athlete_data = User.objects.select_related('athlete')
-        # return athlete_data.all()
+    def get_queryset(self):
+        return Run.objects.select_related('athlete').all()
 
 
 

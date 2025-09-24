@@ -13,11 +13,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class RunSerializer(serializers.ModelSerializer):
-    athlete = UserSerializer()
+    athlete_data = UserSerializer(source='athlete', read_only=True)
     class Meta:
         model = Run
-        fields = '__all__'
-        # fields = ['id', 'username', 'last_name', 'first_name']
+        # fields = '__all__'
+        fields = ('id', 'athlete_data')
 
 
 
