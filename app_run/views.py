@@ -6,6 +6,7 @@ from django.conf import settings
 from .serializers import RunSerializer, UserSerializer
 from rest_framework import viewsets
 from .models import Run, User
+from rest_framework.filters import SearchFilter
 
 
 
@@ -25,6 +26,8 @@ class RunViewSet(viewsets.ModelViewSet):
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    filter_backend = [SearchFilter]
+    search_fields = ['first_name', 'last_name']
 
     # def get_queryset(self):
     #     qs = User.objects.filter(is_superuser=False)
