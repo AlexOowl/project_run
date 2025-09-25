@@ -7,6 +7,7 @@ from .serializers import RunSerializer, UserSerializer
 from rest_framework import viewsets
 from .models import Run, User
 from rest_framework.filters import SearchFilter
+from rest_framework.views import APIView
 
 
 
@@ -39,6 +40,38 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
         return qs
 
 
+class RunStartView(APIView):
+    def post(self, request, run_id):
+        try:
+            run = Run.objects.get(pk=run_id)
+        except Run.DoesNotExist:
+            return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        if run.status == 'in_progress':
+            return Response({"detail": "Bad request."}, status=status.HTTP_400_BAD_REQUEST)
+        elif run.status == 'finished':
+            return Response({"detail": "Run already finished."}, status=status.HTTP_400_BAD_REQUEST)
+
+        run.status = 'in_progress'
+        run.save()
+        return Response(RunSerializer(run).data, status=status.HTTP_200_OK)
+
+
+class RunStopView(APIView):
+    def post(self, request, run_id):
+        try:
+            run = Run.objects.get(pk=run_id)
+        except Run.DoesNotExist:
+            return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        if run.status == 'init':
+            return Response({"detail": "Run not started yet."}, status=status.HTTP_400_BAD_REQUEST)
+        if run.status == 'finished':
+            return Response({"detail": "Run already finished."}, status=status.HTTP_400_BAD_REQUEST)
+
+        run.status = 'finished'
+        run.save()
+        return Response(RunSerializer(run).data, status=status.HTTP_200_OK)
 
 
 
