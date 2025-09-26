@@ -41,9 +41,9 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class RunStartView(APIView):
-    def post(self, request, run_id):
+    def post(self, request, **kwargs):
         try:
-            run = Run.objects.get(pk=run_id)
+            run = Run.objects.get(pk=kwargs.get('id'))
         except Run.DoesNotExist:
             return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
 
