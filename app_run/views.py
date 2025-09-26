@@ -58,9 +58,9 @@ class RunStartView(APIView):
 
 
 class RunStopView(APIView):
-    def post(self, request, run_id):
+    def post(self, request):
         try:
-            run = Run.objects.get(pk=run_id)
+            run = Run.objects.get(pk=self.request.query_param.get('id'))
         except Run.DoesNotExist:
             return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
 
