@@ -12,7 +12,6 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.pagination import PageNumberPagination
 
 
-
 @api_view(['GET'])
 def company_details(request):
     details = {'company_name': settings.COMPANY_NAME,
