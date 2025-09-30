@@ -40,9 +40,9 @@ class RunViewSet(viewsets.ModelViewSet):
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    filter_backends = [SearchFilter]
+    filter_backends = [SearchFilter, OrderingFilter]
     search_fields = ['first_name', 'last_name']
-    # filter_backends += ['date_joined']
+    filter_backends = ['date_joined']
     ordering_fields = ['date_joined']
     pagination_class = UserPagination
 
