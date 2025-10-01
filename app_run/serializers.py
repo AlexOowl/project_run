@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Run, User
 
 
+
 class UserSerializer(serializers.ModelSerializer):
     type = serializers.SerializerMethodField()
     runs_finished = serializers.SerializerMethodField()
