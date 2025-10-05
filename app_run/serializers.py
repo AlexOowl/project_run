@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from .models import Run, User
-
+from .models import Run, User, AthleteInfo
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -27,5 +26,15 @@ class RunSerializer(serializers.ModelSerializer):
         # fields = ['athlete_data']
 
 
+class AthleteInfoSerializer(serializers.ModelSerializer):
+    user_id = serializers.IntegerField(source='user.id', read_only=True)
+
+    class Meta:
+        model = AthleteInfo
+        fields = ['user_id', 'weight', 'goals']
+    def validate_weight(self, value):
+        if value and not(0 < value < 900):
+            raise serializers.ValidationError('weight должен быть > 0 и < 900')
+        return value
 
 

@@ -3,13 +3,14 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.conf import settings
-from .serializers import RunSerializer, UserSerializer
+from .serializers import RunSerializer, UserSerializer, AthleteInfoSerializer
 from rest_framework import viewsets
-from .models import Run, User
+from .models import Run, User, AthleteInfo
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.views import APIView
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.pagination import PageNumberPagination
+from django.shortcuts import get_object_or_404
 
 
 @api_view(['GET'])
@@ -90,6 +91,24 @@ class RunStopView(APIView):
         return Response(RunSerializer(run).data, status=status.HTTP_200_OK)
 
 
+class AthleteInfoView(APIView):
+    def get_object(self, user_id):
+        user = get_object_or_404(User, pk=user_id)
+        athlete_info, created = AthleteInfo.objects.get_or_create(user=user)
+        return athlete_info
 
+    def get(self, request, user_id):
+        athlete_info = self.get_object(user_id)
+        serializer = AthleteInfoSerializer(athlete_info)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request, user_id):
+        user = get_object_or_404(User, pk=user_id)
+        athlete_info, created = AthleteInfo.objects.get_or_create(user=user)
+        serializer = AthleteInfoSerializer(athlete_info, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save(user=user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
