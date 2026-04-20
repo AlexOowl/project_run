@@ -93,7 +93,9 @@ class RunStopView(APIView):
 
 class AthleteInfoView(APIView):
     def get_object(self, user_id):
+        # 404 если пользователя нет
         user = get_object_or_404(User, pk=user_id)
+        # Создаем запись, если её нет (get_or_create)
         athlete_info, created = AthleteInfo.objects.get_or_create(user=user)
         return athlete_info
 

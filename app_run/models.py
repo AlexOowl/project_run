@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 
@@ -17,7 +18,11 @@ class Run(models.Model):
 
 class AthleteInfo(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='athlete_info')
-    weight = models.FloatField(null=True, blank=True)
+    weight = models.FloatField(
+        validators=[MinValueValidator(0.1), MaxValueValidator(899.9)],
+        null=True,
+        blank=True
+    )
     goals = models.TextField(null=True, blank=True)
 
 
