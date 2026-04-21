@@ -27,7 +27,7 @@ class RunSerializer(serializers.ModelSerializer):
 
 
 class AthleteInfoSerializer(serializers.ModelSerializer):
-    user_id = serializers.IntegerField(source='user_id', read_only=True)
+    user_id = serializers.IntegerField(source='user.id', read_only=True)
 
     class Meta:
         model = AthleteInfo
