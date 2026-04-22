@@ -31,7 +31,7 @@ class AthleteInfoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AthleteInfo
-        fields = ['user_id', 'weight', 'goals']
+        fields = ['user', 'weight', 'goals']
 
     def validate_weight(self, value):
         if value and not(0 < value < 900):
