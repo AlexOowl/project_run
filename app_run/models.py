@@ -17,7 +17,7 @@ class Run(models.Model):
 
 
 class AthleteInfo(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='athlete_info', db_column='user_id')
+    user_id = models.OneToOneField(User, on_delete=models.CASCADE, related_name='athlete_info', db_column='user_id')
     weight = models.FloatField(
         validators=[MinValueValidator(0.1), MaxValueValidator(899.9)],
         null=True,
